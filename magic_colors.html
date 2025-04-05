@@ -28,7 +28,7 @@
       crc = calculateCRC(name)
       color = '#' + crc.toString(16).substring(2,8)
       document.getElementById("colorID").innerText = color;
-      document.body.style.background = color.toString(6);
+      document.body.style.background = color;
     }
   </script>
 </head>
