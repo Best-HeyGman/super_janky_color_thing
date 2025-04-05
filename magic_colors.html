@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+  <meta charset="UTF-8" />
+  <script>
+    function calculateCRC(data) {
+      const polynomial = 0xEDB88320;
+      let crc = 0xFFFFFFFF;
+
+      // Iterate through each character in the data
+      for (let i = 0; i < data.length; i++) {
+          // XOR the current character 
+          // with the current CRC value
+          crc ^= data.charCodeAt(i);
+
+          // Perform bitwise operations 
+          // to calculate the new CRC value
+          for (let j = 0; j < 8; j++) {
+              crc = (crc >>> 1) ^ (crc & 1 ? polynomial : 0);
+          }
+      }
+
+      // Perform a final XOR operation and return the CRC value
+      return crc ^ 0xFFFFFFFF;
+    }
+    
+    function generateColor(name) {
+      crc = calculateCRC(name)
+      color = '#' + crc.toString(16).substring(2,8)
+      document.getElementById("colorID").innerText = color;
+      document.body.style.background = color.toString(6);
+    }
+  </script>
+</head>
+
+<body>
+  <h1>Generate your personal magic color</h1>
+  <form action="javascript:generateColor(document.getElementById('name').value)">
+    <label for="name">Please write your name:</label><br>
+    <input type="text" id="name" name="name"><br>
+    <input type="submit" value="Magic start">
+  </form>
+  <br><br>
+  Your color is:
+  <p id="colorID"></p>
+
+
+</body>
